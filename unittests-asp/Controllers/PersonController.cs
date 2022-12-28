@@ -23,12 +23,33 @@ public class PersonController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(PersonModel? personModel)
+    public async Task<IActionResult> Create(PersonModel? person)
     {
-        if (personModel == null)
+        if (person == null)
             return NotFound();
 
-        _db.Persons.Add(personModel);
+        _db.Persons.Add(person);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Update(int? id)
+    {
+        if (id == null)
+            return NotFound();
+
+        var person = await _db.Persons.FirstOrDefaultAsync(x => x.Id == id);
+        if (person == null)
+            return NotFound();
+
+        return View(person);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Update(PersonModel person)
+    {
+        _db.Persons.Update(person);
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
@@ -39,12 +60,12 @@ public class PersonController : Controller
         if (id == null)
             return NotFound();
 
-        var personModel = await _db.Persons.FirstOrDefaultAsync(x => x.Id == id);
-        if (personModel == null)
+        var person = await _db.Persons.FirstOrDefaultAsync(x => x.Id == id);
+        if (person == null)
             return NotFound();
 
-        _db.Persons.Remove(personModel);
+        _db.Persons.Remove(person);
         await _db.SaveChangesAsync();
-        return View(personModel);
+        return RedirectToAction("Index");
     }
 }
