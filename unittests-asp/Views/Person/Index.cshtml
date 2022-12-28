@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<PersonModel>
 
-@{
-
-}
-
 <a asp-action="Create">
     <button>
         Create Person
@@ -13,6 +9,9 @@
     <table class="table text-light">
         <thead>
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
                 </th>
@@ -29,7 +28,12 @@
             {
                 <tr>
                     <td>
-                        @item.Name
+                        @item.Id
+                    </td>
+                    <td>
+                        <a asp-action="GetPerson" asp-route-id="@item.Id">
+                            @item.Name
+                        </a>
                     </td>
                     <td>
                         @item.Age

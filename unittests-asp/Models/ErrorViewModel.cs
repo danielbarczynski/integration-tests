@@ -1,4 +1,4 @@
-namespace unittests_asp.Models
+namespace asp.Models
 {
     public class ErrorViewModel
     {

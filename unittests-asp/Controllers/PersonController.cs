@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 public class PersonController : Controller
 {
     readonly Db _db;
@@ -9,11 +8,19 @@ public class PersonController : Controller
     {
         _db = db;
     }
+
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         var persons = await _db.Persons.ToListAsync();
         return View(persons);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetPerson(int? id)
+    {
+        var person = await _db.Persons.FirstOrDefaultAsync(x => x.Id == id);
+        return View(person);
     }
 
     [HttpGet]
