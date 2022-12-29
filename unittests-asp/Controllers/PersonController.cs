@@ -30,7 +30,7 @@ public class PersonController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(PersonModel? person)
+    public async Task<IActionResult> Create(PersonModel person)
     {
         if (person == null)
             return NotFound();
