@@ -3,6 +3,7 @@ using FluentAssertions;
 //using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace integrationtests
 {
@@ -32,11 +33,11 @@ namespace integrationtests
         {
             var person = new PersonModel()
             {
-                Name = "f"
-            }; // without props because it does not add them anyway
-            //var json = JsonConvert.SerializeObject(person);
-            var httpContent = new StringContent(JsonSerializer.Serialize(person));
-            //var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                Name = "Maria"
+            }; // won't post valid data because my method isn't configured for this
+            var json = JsonConvert.SerializeObject(person);
+            //var httpContent = new StringContent(JsonSerializer.Serialize(person));
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("/Person/Create", httpContent);
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK); // all my controller methods return OK status
         }
